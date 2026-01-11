@@ -1,0 +1,7 @@
+SELECT
+  u.user_id,
+  MIN(e.event_date) - u.signup_date AS days_to_first_publish
+FROM saas_users u
+JOIN saas_events e ON u.user_id = e.user_id
+WHERE e.event_name = 'first_publish'
+GROUP BY u.user_id, u.signup_date;
