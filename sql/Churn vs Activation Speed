@@ -1,0 +1,11 @@
+SELECT
+  CASE
+    WHEN a.days_to_first_publish <= 1 THEN 'Fast'
+    WHEN a.days_to_first_publish <= 7 THEN 'Medium'
+    ELSE 'Slow'
+  END AS activation_speed,
+  COUNT(s.user_id) AS users,
+  COUNT(CASE WHEN s.status = 'cancelled' THEN 1 END) AS churned
+FROM activation_table a
+JOIN saas_subscriptions s ON a.user_id = s.user_id
+GROUP BY activation_speed;
