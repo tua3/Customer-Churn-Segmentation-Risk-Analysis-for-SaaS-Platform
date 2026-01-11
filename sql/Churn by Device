@@ -1,0 +1,8 @@
+SELECT
+  u.device,
+  COUNT(s.user_id) AS total_paid,
+  COUNT(CASE WHEN s.status = 'cancelled' THEN 1 END) AS churned,
+  COUNT(CASE WHEN s.status = 'cancelled' THEN 1 END) * 1.0 / COUNT(s.user_id) AS churn_rate
+FROM saas_users u
+JOIN saas_subscriptions s ON u.user_id = s.user_id
+GROUP BY u.device;
